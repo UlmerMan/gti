@@ -1,9 +1,9 @@
-use std::io;
-
 use gti::{app::App, widgets::car::CarVariants};
 
-fn main() -> io::Result<()> {
+fn main() -> color_eyre::Result<()> {
     let matches = gti::cli::cli().get_matches();
+
+    color_eyre::install()?;
 
     match matches.subcommand() {
         Some(("push", _sub_matches)) => {
