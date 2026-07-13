@@ -1,5 +1,7 @@
 use ratatui::widgets::{Paragraph, Widget};
 
+use crate::widgets::art;
+
 pub enum CarVariants {
     Driving1,
     Driving2,
@@ -91,98 +93,35 @@ impl Widget for &Car {
     fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer) {
         match self.variant {
             CarVariants::Driving1 => {
-                return Paragraph::new(CAR_VARIANT1)
+                return Paragraph::new(art::CAR_VARIANT1)
                     .left_aligned()
                     .render(area, buf);
             }
             CarVariants::Driving2 => {
-                return Paragraph::new(CAR_VARIANT2)
+                return Paragraph::new(art::CAR_VARIANT2)
                     .left_aligned()
                     .render(area, buf);
             }
             CarVariants::Pushing1 => {
-                return Paragraph::new(CAR_PUSHING1)
+                return Paragraph::new(art::CAR_PUSHING1)
                     .left_aligned()
                     .render(area, buf);
             }
             CarVariants::Pushing2 => {
-                return Paragraph::new(CAR_PUSHING2)
+                return Paragraph::new(art::CAR_PUSHING2)
                     .left_aligned()
                     .render(area, buf);
             }
             CarVariants::Pulling1 => {
-                return Paragraph::new(CAR_PULLING1)
+                return Paragraph::new(art::CAR_PULLING1)
                     .left_aligned()
                     .render(area, buf);
             }
             CarVariants::Pulling2 => {
-                return Paragraph::new(CAR_PULLING2)
+                return Paragraph::new(art::CAR_PULLING2)
                     .left_aligned()
                     .render(area, buf);
             }
         }
     }
 }
-
-const CAR_VARIANT1: &[&str] = &[
-    "   ,---------------.",
-    "  /  /``````|``````\\\\",
-    " /  /_______|_______\\\\________",
-    "|]      GTI |'       |        |]",
-    "=  .-:-.    |________|  .-:-.  =",
-    " `  -+-  --------------  -+-  '",
-    "   '-:-'                '-:-'  ",
-];
-
-const CAR_VARIANT2: &[&str] = &[
-    "   ,---------------.",
-    "  /  /``````|``````\\\\",
-    " /  /_______|_______\\\\________",
-    "|]      GTI |'       |        |]",
-    "=  .:-:.    |________|  .:-:.  =",
-    " `   X   --------------   X   '",
-    "   ':-:'                ':-:'  ",
-];
-
-const CAR_PUSHING1 : &[&str] = &[
-    "   __      ,---------------.",
-    "  /--\\   /  /``````|``````\\\\",
-    "  \\__/  /  /_______|_______\\\\________",
-    "   ||-< |]      GTI |'       |        |]",
-    "   ||-< =  .-:-.    |________|  .-:-.  =",
-    "   ||    `  -+-  --------------  -+-  '",
-    "   ||      '-:-'                '-:-'  ",
-];
-
-const CAR_PUSHING2 : &[&str] = &[
-    "   __      ,---------------.",
-    "  /--\\   /  /``````|``````\\\\",
-    "  \\__/  /  /_______|_______\\\\________",
-    "   ||-< |]      GTI |'       |        |]",
-    "   ||-< =  .:-:.    |________|  .:-:.  =",
-    "   /\\    `   X   --------------   X   '",
-    "  /  \\     ':-:'                ':-:'  ",
-];
-
-const CAR_PULLING1 : &[&str] = &[
-    "                                              ------.",
-    "   ,---------------.                          |      |       ,",
-    "  /  /``````|``````\\\\                         |      |       ||",
-    " /  /_______|_______\\\\________            ,-------.--+-------++--,",
-    "|]      GTI |'       |        |]           / .:-:.     |          |",
-    "=  .-:-.    |________|  .-:-. = -----------     .   `-------  .-:-.",
-    " `  -+-  --------------  -+-  '               '       `----'    +",
-    "   '-:-'                '-:-'                '-:-'            '-:-'",
-];
-    
-
-const CAR_PULLING2 : &[&str] = &[
-    "                                              ------.",
-    "   ,---------------.                          |      |       ,",
-    "  /  /``````|``````\\\\                         |      |       ||",
-    " /  /_______|_______\\\\________            ,-------.--+-------++--,",
-    "|]      GTI |'       |        |]           / .-:-.     |          |",
-    "=  .:-:.    |________|  .:-:. = -----------   ,     `-------  .:-:.",
-    " `   X   --------------   X   '                 '     `----'    X",
-    "   ':-:'                ':-:'                ':-:'            ':-:'",
-];

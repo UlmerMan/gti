@@ -1,5 +1,6 @@
 use gti::{app::App, widgets::car::CarVariants};
 
+
 fn main() -> color_eyre::Result<()> {
     let matches = gti::cli::cli().get_matches();
 
