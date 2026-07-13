@@ -7,7 +7,7 @@ use ratatui::{
     layout::{self, Constraint, Layout},
 };
 
-use crate::widgets::car::Car;
+use crate::widgets::car::{Car, CarVariants};
 
 pub struct App {
     car: Car,
@@ -16,9 +16,9 @@ pub struct App {
 }
 
 impl App {
-    pub fn new() -> Self {
+    pub fn new(car_variant: CarVariants) -> Self {
         Self {
-            car: Car::default(),
+            car: Car::new(car_variant),
             distance_driven: 0,
             exit: false,
         }
@@ -30,7 +30,7 @@ impl App {
         while !self.exit {
             terminal.draw(|frame| self.draw(frame))?;
 
-            self.handle_events()?;            
+            self.handle_events()?;
 
             // Tick once per second.
             if last_tick.elapsed() >= Duration::from_millis(50) {
@@ -63,22 +63,22 @@ impl App {
                 Constraint::Fill(1),
             ])
             .split(vertical[1]);
-        
+
         if self.distance_driven % 4 == 0 {
-            self.car.switch_variant();
-        } 
+            self.car.switch_driving_variant();
+        }
 
         frame.render_widget(&self.car, horizontal[1]);
     }
 
     fn handle_events(&mut self) -> io::Result<()> {
         if event::poll(Duration::from_millis(50))? {
-                if let Event::Key(key) = event::read()? {
-                    if key.kind == KeyEventKind::Press {
-                        self.handle_key_event(key);
-                    }
+            if let Event::Key(key) = event::read()? {
+                if key.kind == KeyEventKind::Press {
+                    self.handle_key_event(key);
                 }
             }
+        }
         Ok(())
     }
 
