@@ -3,7 +3,7 @@ name = "gti"
 version = "0.0.1"
 edition = "2024"
 description = "A tool for all people who misspell Git"
-license = "GPL"
+license = "GPL-3.0"
 repository = "https://github.com/UlmerMan/gti"
 
 [[bin]]
