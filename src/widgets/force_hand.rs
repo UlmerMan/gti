@@ -1,12 +1,11 @@
+use ratatui::layout::Position;
 use ratatui::widgets::Paragraph;
 
 use ratatui::{
-    buffer::Buffer,
-    layout::Rect,
     style::{Color, Style},
     widgets::Widget,
 };
-use rand::{Rng, RngExt};
+use rand::RngExt;
 
 
 use crate::widgets::art;
@@ -41,10 +40,12 @@ impl Widget for &ForceHand {
                 && x < area.width as f32
                 && y < area.height as f32
             {
-                let cell = buf.get_mut(
-                    area.x + x as u16,
-                    area.y + y as u16,
-                );
+                let cell = buf.cell_mut(
+                    Position::new(
+                        area.x + x as u16,
+                        area.y + y as u16,
+                    )
+                ).unwrap();
 
                 cell.set_char('*');
                 cell.set_style(
