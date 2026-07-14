@@ -7,12 +7,16 @@ fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
 
     match matches.subcommand() {
-        Some(("push", _sub_matches)) => {
-            ratatui::run(|terminal| App::new(CarVariants::Pushing1).run(terminal))
+        Some(("push", sub_matches)) => {
+            match sub_matches.get_one::<String>("force") {
+                Some(_) => ratatui::run(|terminal| App::new(CarVariants::Pushing1, true).run(terminal)),
+                None => ratatui::run(|terminal| App::new(CarVariants::Pushing1, false).run(terminal))
+            }
+            
         }
         Some(("pull", _sub_matches)) => {
-            ratatui::run(|terminal| App::new(CarVariants::Pulling1).run(terminal))
+            ratatui::run(|terminal| App::new(CarVariants::Pulling1, false).run(terminal))
         }
-        _ => ratatui::run(|terminal| App::new(CarVariants::Driving1).run(terminal)),
+        _ => ratatui::run(|terminal| App::new(CarVariants::Driving1, false).run(terminal)),
     }
 }
