@@ -8,11 +8,11 @@ fn main() -> color_eyre::Result<()> {
 
     match matches.subcommand() {
         Some(("push", sub_matches)) => {
-            match sub_matches.get_one::<String>("force") {
-                Some(_) => ratatui::run(|terminal| App::new(CarVariants::Pushing1, true).run(terminal)),
-                None => ratatui::run(|terminal| App::new(CarVariants::Pushing1, false).run(terminal))
+            if sub_matches.get_flag("force") {
+                ratatui::run(|terminal| App::new(CarVariants::Driving1, true).run(terminal))
+            } else {
+                ratatui::run(|terminal| App::new(CarVariants::Pushing1, false).run(terminal))
             }
-            
         }
         Some(("pull", _sub_matches)) => {
             ratatui::run(|terminal| App::new(CarVariants::Pulling1, false).run(terminal))

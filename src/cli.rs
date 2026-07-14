@@ -1,4 +1,4 @@
-use clap::{Command, arg};
+use clap::{Command, Arg, ArgAction};
 
 pub fn cli() -> Command {
     Command::new("gti")
@@ -6,7 +6,11 @@ pub fn cli() -> Command {
         .subcommand_required(false)
         .subcommand(
             Command::new("push")
-            .arg(arg!(--force))
+            .arg(
+                Arg::new("force")
+                    .long("force")
+                    .action(ArgAction::SetTrue),
+            )
         )
         .subcommand(
             Command::new("pull")
