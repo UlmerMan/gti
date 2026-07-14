@@ -7,7 +7,7 @@ license = "GPL"
 repository = "https://github.com/UlmerMan/gti"
 
 [[bin]]
-name = "gti "
+name = "gti"
 path = "src/main.rs"
 
 [dependencies]
