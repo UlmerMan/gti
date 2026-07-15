@@ -2,13 +2,29 @@ use ratatui::widgets::{Paragraph, Widget};
 
 use crate::widgets::art;
 
+#[derive(Copy, Clone)]
 pub enum CarVariants {
+    Driving,
     Driving1,
     Driving2,
     Pushing1,
     Pushing2,
     Pulling1,
     Pulling2,
+}
+
+impl CarVariants {
+    pub fn switch_driving_variant(&mut self) {
+        match self {
+            CarVariants::Driving  =>  *self = CarVariants::Driving,
+            CarVariants::Driving1 => *self = CarVariants::Driving2,
+            CarVariants::Driving2 => *self = CarVariants::Driving1,
+            CarVariants::Pushing1 => *self = CarVariants::Pushing2,
+            CarVariants::Pushing2 => *self = CarVariants::Pushing1,
+            CarVariants::Pulling1 => *self = CarVariants::Pulling2,
+            CarVariants::Pulling2 => *self = CarVariants::Pulling1,
+        }
+    }
 }
 
 pub struct Car {
@@ -26,6 +42,11 @@ impl Car {
 
     pub fn set_variant(&mut self, variant: CarVariants) {
         match variant {
+            CarVariants::Driving => {
+                self.variant = CarVariants::Driving;
+                self.width = 32;
+                self.height = 7;
+            }
             CarVariants::Driving1 => {
                 self.variant = CarVariants::Driving1;
                 self.width = 32;
@@ -59,17 +80,6 @@ impl Car {
         }
     }
 
-    pub fn switch_driving_variant(&mut self) {
-        match self.variant {
-            CarVariants::Driving1 => self.set_variant(CarVariants::Driving2),
-            CarVariants::Driving2 => self.set_variant(CarVariants::Driving1),
-            CarVariants::Pushing1 => self.set_variant(CarVariants::Pushing2),
-            CarVariants::Pushing2 => self.set_variant(CarVariants::Pushing1),
-            CarVariants::Pulling1 => self.set_variant(CarVariants::Pulling2),
-            CarVariants::Pulling2 => self.set_variant(CarVariants::Pulling1),
-        }
-    }
-
     pub fn get_height(self) -> u16 {
         self.height
     }
@@ -92,6 +102,11 @@ impl Default for Car {
 impl Widget for &Car {
     fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer) {
         match self.variant {
+            CarVariants::Driving => {
+                return Paragraph::new(art::CAR_VARIANT1)
+                    .left_aligned()
+                    .render(area, buf);
+            }
             CarVariants::Driving1 => {
                 return Paragraph::new(art::CAR_VARIANT1)
                     .left_aligned()
