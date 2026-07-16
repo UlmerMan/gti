@@ -21,37 +21,14 @@ pub struct App {
 }
 
 impl App {
-    pub fn new(parameters: clap::ArgMatches) -> Self {
-        let mut app = Self {
-            using_force: false,
-            using_binoculars: false,
-            car_variant: CarVariants::Driving,
-            distance_driven: 0,
-            exit: false,
-        };
-
-        match parameters.subcommand() {
-            Some(("push", sub_matches)) => {
-                if sub_matches.get_flag("force") {
-                    app.car_variant = CarVariants::Driving;
-                    app.using_force = true;
-                } else {
-                    app.car_variant = CarVariants::Pushing1;
-                }
-            }
-            Some(("pull", _)) => {
-                app.car_variant = CarVariants::Pulling1;
-            }
-            Some(("checkout", _)) => {
-                app.car_variant = CarVariants::Driving1;
-                app.using_binoculars = true;
-            }
-            _ => {
-                app.car_variant = CarVariants::Driving1;
-            }
+    pub fn new(using_force: bool, using_binoculars: bool, car_variant: CarVariants, distance_driven: u16, exit: bool) -> Self {
+        Self {
+            using_force: using_force,
+            using_binoculars: using_binoculars,
+            car_variant: car_variant,
+            distance_driven: distance_driven,
+            exit: exit,
         }
-
-        app
     }
 
     pub fn run(&mut self, terminal: &mut DefaultTerminal) -> color_eyre::Result<()> {
@@ -173,5 +150,46 @@ impl App {
 
     fn exit(&mut self) {
         self.exit = true;
+    }
+}
+
+impl Default for App {
+    fn default() -> Self {
+        Self {
+            using_force: false,
+            using_binoculars: false,
+            car_variant: CarVariants::Driving,
+            distance_driven: 0,
+            exit: false,
+        }
+    }
+}
+
+impl From<clap::ArgMatches> for App {
+    fn from(parameters: clap::ArgMatches) -> Self {
+        let mut app = App::default();
+
+        match parameters.subcommand() {
+            Some(("push", sub_matches)) => {
+                if sub_matches.get_flag("force") {
+                    app.car_variant = CarVariants::Driving;
+                    app.using_force = true;
+                } else {
+                    app.car_variant = CarVariants::Pushing1;
+                }
+            }
+            Some(("pull", _)) => {
+                app.car_variant = CarVariants::Pulling1;
+            }
+            Some(("checkout", _)) => {
+                app.car_variant = CarVariants::Driving1;
+                app.using_binoculars = true;
+            }
+            _ => {
+                app.car_variant = CarVariants::Driving1;
+            }
+        }
+
+        app
     }
 }

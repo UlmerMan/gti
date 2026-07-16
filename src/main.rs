@@ -5,7 +5,7 @@ fn main() -> color_eyre::Result<()> {
 
     color_eyre::install()?;
 
-    ratatui::run(|terminal| App::new(matches).run(terminal))?;
+    ratatui::run(|terminal| App::from(matches).run(terminal))?;
 
     Ok(())
 }
