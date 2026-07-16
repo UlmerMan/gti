@@ -16,7 +16,7 @@ pub enum CarVariants {
 impl CarVariants {
     pub fn switch_driving_variant(&mut self) {
         match self {
-            CarVariants::Driving  =>  *self = CarVariants::Driving,
+            CarVariants::Driving => *self = CarVariants::Driving,
             CarVariants::Driving1 => *self = CarVariants::Driving2,
             CarVariants::Driving2 => *self = CarVariants::Driving1,
             CarVariants::Pushing1 => *self = CarVariants::Pushing2,
@@ -51,32 +51,32 @@ impl Car {
                 self.variant = CarVariants::Driving1;
                 self.width = 32;
                 self.height = 7;
-            },
+            }
             CarVariants::Driving2 => {
                 self.variant = CarVariants::Driving2;
                 self.width = 32;
                 self.height = 7;
-            },
+            }
             CarVariants::Pushing1 => {
                 self.variant = CarVariants::Pushing1;
                 self.width = 40;
                 self.height = 7;
-            },
+            }
             CarVariants::Pushing2 => {
                 self.variant = CarVariants::Pushing2;
                 self.width = 40;
                 self.height = 7;
-            },
+            }
             CarVariants::Pulling1 => {
                 self.variant = CarVariants::Pulling1;
                 self.width = 68;
                 self.height = 8;
-            },
+            }
             CarVariants::Pulling2 => {
                 self.variant = CarVariants::Pulling2;
                 self.width = 68;
                 self.height = 8;
-            },
+            }
         }
     }
 

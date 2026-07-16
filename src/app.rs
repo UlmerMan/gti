@@ -6,8 +6,11 @@ use ratatui::{
     layout::{Constraint, Layout},
 };
 
-use crate::widgets::{binoculars, car::{Car, CarVariants}};
 use crate::widgets::force_hand::ForceHand;
+use crate::widgets::{
+    binoculars,
+    car::{Car, CarVariants},
+};
 
 pub struct App {
     using_force: bool,
@@ -26,7 +29,7 @@ impl App {
             distance_driven: 0,
             exit: false,
         };
-    
+
         match parameters.subcommand() {
             Some(("push", sub_matches)) => {
                 if sub_matches.get_flag("force") {
@@ -81,20 +84,19 @@ impl App {
         let binoculars = binoculars::Binoculars::new();
 
         car.set_variant(self.car_variant);
-        
+
         let horizontal_width = car.width
-        + if self.using_force {
-            hand.as_ref().map_or(0, |h| h.width)
-        } else {
-            0
-        };
+            + if self.using_force {
+                hand.as_ref().map_or(0, |h| h.width)
+            } else {
+                0
+            };
 
         if self.distance_driven >= frame.area().width.saturating_sub(horizontal_width) {
             self.exit();
         }
 
-        let vertical = 
-        if self.using_force {
+        let vertical = if self.using_force {
             let hand = hand.as_ref().unwrap();
 
             Layout::vertical([
@@ -114,8 +116,7 @@ impl App {
             ])
         };
 
-        let horizontal = 
-        if self.using_force {
+        let horizontal = if self.using_force {
             let hand = hand.as_ref().unwrap();
 
             Layout::horizontal([
@@ -145,7 +146,6 @@ impl App {
         if self.using_binoculars && binoculars.height + car.height <= frame.area().height {
             frame.render_widget(&binoculars, vertical_split[0]);
         }
-
     }
 
     fn update(&mut self) {
@@ -153,7 +153,6 @@ impl App {
             self.car_variant.switch_driving_variant();
         }
     }
-
 
     fn handle_events(&mut self) -> color_eyre::Result<()> {
         if event::poll(Duration::from_millis(50))? {

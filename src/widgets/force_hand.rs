@@ -1,18 +1,17 @@
 use ratatui::layout::Position;
 use ratatui::widgets::Paragraph;
 
+use rand::RngExt;
 use ratatui::{
     style::{Color, Style},
     widgets::Widget,
 };
-use rand::RngExt;
-
 
 use crate::widgets::art;
 
 pub struct ForceHand {
     pub height: u16,
-    pub width: u16
+    pub width: u16,
 }
 
 impl Widget for &ForceHand {
@@ -35,22 +34,13 @@ impl Widget for &ForceHand {
         let mut y = start_y as f32;
 
         for _ in 0..len {
-            if x >= 0.0
-                && y >= 0.0
-                && x < area.width as f32
-                && y < area.height as f32
-            {
-                let cell = buf.cell_mut(
-                    Position::new(
-                        area.x + x as u16,
-                        area.y + y as u16,
-                    )
-                ).unwrap();
+            if x >= 0.0 && y >= 0.0 && x < area.width as f32 && y < area.height as f32 {
+                let cell = buf
+                    .cell_mut(Position::new(area.x + x as u16, area.y + y as u16))
+                    .unwrap();
 
                 cell.set_char('*');
-                cell.set_style(
-                    Style::default().fg(Color::Cyan)
-                );
+                cell.set_style(Style::default().fg(Color::Cyan));
             }
 
             x += dx;

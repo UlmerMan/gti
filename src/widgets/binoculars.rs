@@ -18,6 +18,8 @@ impl Binoculars {
 
 impl Widget for &Binoculars {
     fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer) {
-        Paragraph::new(art::BINOCULARS).alignment(ratatui::layout::HorizontalAlignment::Center).render(area, buf);
+        Paragraph::new(art::BINOCULARS)
+            .alignment(ratatui::layout::HorizontalAlignment::Center)
+            .render(area, buf);
     }
 }

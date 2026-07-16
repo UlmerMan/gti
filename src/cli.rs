@@ -1,21 +1,12 @@
-use clap::{Command, Arg, ArgAction};
+use clap::{Arg, ArgAction, Command};
 
 pub fn cli() -> Command {
     Command::new("gti")
         .about("A troll versioning cli")
         .subcommand_required(false)
         .subcommand(
-            Command::new("push")
-            .arg(
-                Arg::new("force")
-                    .long("force")
-                    .action(ArgAction::SetTrue),
-            )
+            Command::new("push").arg(Arg::new("force").long("force").action(ArgAction::SetTrue)),
         )
-        .subcommand(
-            Command::new("pull")
-        )
-        .subcommand(
-            Command::new("checkout")
-        )
+        .subcommand(Command::new("pull"))
+        .subcommand(Command::new("checkout"))
 }

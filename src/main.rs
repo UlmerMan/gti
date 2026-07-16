@@ -1,6 +1,5 @@
 use gti::app::App;
 
-
 fn main() -> color_eyre::Result<()> {
     let matches = gti::cli::cli().get_matches();
 
