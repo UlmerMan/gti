@@ -6,11 +6,12 @@ use ratatui::{
     layout::{Constraint, Layout},
 };
 
-use crate::widgets::car::{Car, CarVariants};
+use crate::widgets::{binoculars, car::{Car, CarVariants}};
 use crate::widgets::force_hand::ForceHand;
 
 pub struct App {
     using_force: bool,
+    using_binoculars: bool,
     car_variant: CarVariants,
     distance_driven: u16,
     exit: bool,
@@ -20,6 +21,7 @@ impl App {
     pub fn new(parameters: clap::ArgMatches) -> Self {
         let mut app = Self {
             using_force: false,
+            using_binoculars: false,
             car_variant: CarVariants::Driving,
             distance_driven: 0,
             exit: false,
@@ -36,6 +38,10 @@ impl App {
             }
             Some(("pull", _)) => {
                 app.car_variant = CarVariants::Pulling1;
+            }
+            Some(("checkout", _)) => {
+                app.car_variant = CarVariants::Driving1;
+                app.using_binoculars = true;
             }
             _ => {
                 app.car_variant = CarVariants::Driving1;
@@ -72,6 +78,8 @@ impl App {
             None
         };
 
+        let binoculars = binoculars::Binoculars::new();
+
         car.set_variant(self.car_variant);
         
         let horizontal_width = car.width
@@ -96,7 +104,11 @@ impl App {
             ])
         } else {
             Layout::vertical([
-                Constraint::Fill(1),
+                if self.using_binoculars && binoculars.height + car.height <= frame.area().height {
+                    Constraint::Length(binoculars.height)
+                } else {
+                    Constraint::Fill(1)
+                },
                 Constraint::Length(car.height),
                 Constraint::Fill(1),
             ])
@@ -128,6 +140,10 @@ impl App {
             frame.render_widget(&car, horizontal_split[2]);
         } else {
             frame.render_widget(&car, horizontal_split[1]);
+        }
+
+        if self.using_binoculars && binoculars.height + car.height <= frame.area().height {
+            frame.render_widget(&binoculars, vertical_split[0]);
         }
 
     }

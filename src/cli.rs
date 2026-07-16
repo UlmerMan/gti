@@ -15,4 +15,7 @@ pub fn cli() -> Command {
         .subcommand(
             Command::new("pull")
         )
+        .subcommand(
+            Command::new("checkout")
+        )
 }
